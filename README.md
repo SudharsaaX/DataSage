@@ -186,6 +186,3 @@ streamlit run app/ui.py
 
 ---
 
-## License
-
-This project is for educational and demonstration purposes.
