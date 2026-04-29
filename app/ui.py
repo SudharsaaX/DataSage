@@ -11,7 +11,6 @@ st.set_page_config(
     layout="wide"
 )
 
-# Clean styling
 st.markdown("""
 <style>
 .block-container {
@@ -35,18 +34,15 @@ h1 {
 </style>
 """, unsafe_allow_html=True)
 
-# 🧠 Header
 st.title("DataSage")
 st.caption("Ask your data. Get instant insights.")
 
-# Session state
 if "messages" not in st.session_state:
     st.session_state.messages = []
 
 if "df" not in st.session_state:
     st.session_state.df = None
 
-# Display chat history
 for msg in st.session_state.messages:
     with st.chat_message(msg["role"]):
         st.write(msg["content"])
@@ -64,7 +60,6 @@ for msg in st.session_state.messages:
             st.markdown("**Data**")
             st.dataframe(df, use_container_width=True)
 
-# Typing effect
 def type_text(text):
     placeholder = st.empty()
     output = ""
@@ -73,7 +68,6 @@ def type_text(text):
         placeholder.markdown(output)
         time.sleep(0.008)
 
-# Input
 user_input = st.chat_input("Ask DataSage...")
 
 if user_input:
@@ -89,7 +83,6 @@ if user_input:
         response = requests.post(API_URL, json={"question": user_input})
         data = response.json()
 
-    # Chat response
     if "response" in data:
         with st.chat_message("assistant"):
             type_text(data["response"])
@@ -132,19 +125,25 @@ if user_input:
         "result": result
     })
 
-# =========================
-# Sidebar
-# =========================
-
 st.sidebar.title("DataSage")
 
 df = st.session_state.df
 
+st.markdown("""
+<style>
+section[data-testid="stSidebar"] .block-container {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+}
+section[data-testid="stSidebar"] .stSlider,
+section[data-testid="stSidebar"] .stMultiSelect {
+    margin-bottom: 0.4rem;
+}
+</style>
+""", unsafe_allow_html=True)
+
 if df is not None:
 
-    st.sidebar.markdown("### Filters")
-
-    # Reset
     if st.sidebar.button("Reset filters"):
         st.session_state.df = df
         st.experimental_rerun()
@@ -152,42 +151,40 @@ if df is not None:
     filtered_df = df.copy()
 
     for col in df.columns:
-        st.sidebar.markdown(f"**{col}**")
 
-        if df[col].dtype == "object":
-            options = sorted(df[col].dropna().unique().tolist())
-            selected = st.sidebar.multiselect(
-                label=f"Select {col}",
-                options=options,
-                default=options,
-                key=f"filter_{col}"
-            )
-            filtered_df = filtered_df[filtered_df[col].isin(selected)]
+        with st.sidebar.expander(col, expanded=False):
 
-        elif pd.api.types.is_numeric_dtype(df[col]):
-            min_val = float(df[col].min())
-            max_val = float(df[col].max())
+            if df[col].dtype == "object":
+                options = sorted(df[col].dropna().unique().tolist())
+                selected = st.multiselect(
+                    "Values",
+                    options,
+                    default=options,
+                    key=f"filter_{col}"
+                )
+                filtered_df = filtered_df[filtered_df[col].isin(selected)]
 
-            selected_range = st.sidebar.slider(
-                label=f"{col} range",
-                min_value=min_val,
-                max_value=max_val,
-                value=(min_val, max_val),
-                key=f"slider_{col}"
-            )
+            elif pd.api.types.is_numeric_dtype(df[col]):
+                min_val = float(df[col].min())
+                max_val = float(df[col].max())
 
-            filtered_df = filtered_df[
-                (filtered_df[col] >= selected_range[0]) &
-                (filtered_df[col] <= selected_range[1])
-            ]
+                selected_range = st.slider(
+                    "Range",
+                    min_value=min_val,
+                    max_value=max_val,
+                    value=(min_val, max_val),
+                    key=f"slider_{col}"
+                )
 
-        st.sidebar.markdown("")
+                filtered_df = filtered_df[
+                    (filtered_df[col] >= selected_range[0]) &
+                    (filtered_df[col] <= selected_range[1])
+                ]
 
     st.sidebar.markdown("---")
-    st.sidebar.markdown("### Filtered Data")
+    st.sidebar.subheader("Filtered Data")
     st.sidebar.dataframe(filtered_df, use_container_width=True)
 
-    # Export
     csv = filtered_df.to_csv(index=False).encode("utf-8")
 
     st.sidebar.download_button(

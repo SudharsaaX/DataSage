@@ -5,7 +5,6 @@ OLLAMA_URL = "http://localhost:11434/api/generate"
 MODEL = "llama3.1:8b"
 
 
-# 🧠 Clean SQL output
 def clean_sql(response: str) -> str:
     response = response.strip()
 
@@ -26,7 +25,6 @@ def clean_sql(response: str) -> str:
     return response.strip()
 
 
-# 🤖 Generate SQL
 def generate_sql(user_input: str) -> str:
     prompt = f"""
 You are a strict MySQL query generator.
@@ -58,7 +56,6 @@ User Input: {user_input}
     return clean_sql(result["response"])
 
 
-# 🧠 Explain SQL
 def explain_sql(sql_query: str) -> str:
     prompt = f"""
 Explain this SQL query in simple English:
@@ -79,7 +76,6 @@ Explain this SQL query in simple English:
     return result["response"].strip()
 
 
-# 🧠 Intent Detection (SMART)
 def classify_intent(user_input: str) -> str:
     prompt = f"""
 Classify the user input into ONE word:
