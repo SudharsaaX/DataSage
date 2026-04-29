@@ -69,7 +69,7 @@ ai-sql-assistant/
 ### 1. Clone the Repository
 
 ```
-git clone https://github.com/your-username/datasage.git
+git clone https://github.com/SudharsaaX/DataSage.git
 cd datasage
 ```
 
@@ -153,7 +153,9 @@ streamlit run app/ui.py
 ### Main Interface
 ![Main UI](outputs/main-interface.png)
 
-### Demo
+---
+
+## Demo Video
 ![Demo](outputs/demo.gif)
 
 ---
@@ -168,12 +170,17 @@ streamlit run app/ui.py
 
 ---
 
-## Author
 
-Sudharsan S
+<p align="center">
+  <img src="https://github.com/SudharsaaX.png" width="120" style="border-radius:50%" />
+</p>
+
+<h3 align="center">Sudharsan</h3>
+
+<p align="center">
+  <a href="https://github.com/SudharsaaX">
+    <img src="https://img.shields.io/badge/GitHub-SudharsaaX-181717?style=for-the-badge&logo=github"/>
+  </a>
+</p>
 
 ---
-
-## License
-
-This project is for educational and demonstration purposes.
