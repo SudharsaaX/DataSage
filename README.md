@@ -1,24 +1,34 @@
 # DataSage
 
-DataSage is an AI-powered SQL assistant that lets you interact with a MySQL database using natural language. Instead of writing SQL queries manually, you can simply ask questions in plain English and get results instantly.
+DataSage is an AI-powered SQL assistant that lets you query a MySQL database using natural language. Ask questions in plain English, and it generates safe SQL queries, executes them, and explains the results instantly.
+
+---
+
+## Demo
+
+[![Watch Demo](outputs/main-interface.png)](https://github.com/SudharsaaX/DataSage)
+
+Or preview below:
+
+![Demo](outputs/demo.gif)
 
 ---
 
 ## Overview
 
-DataSage combines a local large language model with a database backend to translate natural language into SQL queries, execute them safely, and present the results in a clean interface. It also explains the generated SQL so users can understand what is happening behind the scenes.
+DataSage combines a local large language model with a database backend to translate natural language into SQL queries. It ensures safe execution, returns structured results, and explains each query so users understand what is happening.
 
 ---
 
 ## Features
 
 * Natural language to SQL conversion using a local LLM
-* Safe query execution (only SELECT queries allowed)
-* SQL query explanation in plain English
+* Safe query execution (read-only queries only)
+* SQL explanation in plain English
 * Interactive chat-based interface
-* Dynamic sidebar filters for result exploration
-* CSV export for filtered data
-* Local execution with no external API dependency
+* Dynamic sidebar filters for data exploration
+* CSV export for filtered results
+* Fully local setup with no external API dependency
 
 ---
 
@@ -28,54 +38,54 @@ DataSage combines a local large language model with a database backend to transl
 * FastAPI
 * Streamlit
 * MySQL
-* Ollama (Llama 3.1 model)
+* Ollama (Llama 3.1)
 * Pandas
+
+---
+
+## How It Works
+
+1. Enter a question in natural language
+2. LLM converts it into a SQL query
+3. Safety layer validates the query
+4. Query executes on MySQL
+5. Results are displayed in the UI
+6. LLM explains the query
 
 ---
 
 ## Project Structure
 
 ```
-ai-sql-assistant/
+DataSage/
 │
 ├── app/
 │   ├── main.py        # FastAPI backend
-│   ├── llm.py         # LLM logic (SQL generation + explanation)
+│   ├── llm.py         # LLM logic
 │   ├── db.py          # Database connection
-│   ├── safety.py      # Query safety checks
+│   ├── safety.py      # Query validation
 │   ├── ui.py          # Streamlit frontend
 │
-├── .env               # Environment variables (not committed)
-├── .env.example       # Example environment config
+├── outputs/           # Screenshots and demo GIF
+├── .env.example
 ├── requirements.txt
 ├── README.md
 ```
 
 ---
 
-## How It Works
-
-1. User enters a question in natural language
-2. LLM converts it into a SQL query
-3. Safety layer ensures only read-only queries
-4. Query is executed on MySQL
-5. Results are returned and displayed
-6. LLM explains the SQL query
-
----
-
 ## Setup Instructions
 
-### 1. Clone the Repository
+### 1. Clone the repository
 
 ```
 git clone https://github.com/SudharsaaX/DataSage.git
-cd datasage
+cd DataSage
 ```
 
 ---
 
-### 2. Create Virtual Environment
+### 2. Create virtual environment
 
 ```
 python -m venv venv
@@ -84,7 +94,7 @@ venv\Scripts\activate
 
 ---
 
-### 3. Install Dependencies
+### 3. Install dependencies
 
 ```
 pip install -r requirements.txt
@@ -92,9 +102,9 @@ pip install -r requirements.txt
 
 ---
 
-### 4. Setup Environment Variables
+### 4. Configure environment variables
 
-Create a `.env` file based on `.env.example`:
+Create a `.env` file:
 
 ```
 DB_HOST=localhost
@@ -105,9 +115,7 @@ DB_NAME=ai_sql_db
 
 ---
 
-### 5. Run Local LLM (Ollama)
-
-Make sure Ollama is installed and run:
+### 5. Run local LLM (Ollama)
 
 ```
 ollama run llama3.1:8b
@@ -115,7 +123,7 @@ ollama run llama3.1:8b
 
 ---
 
-### 6. Start Backend Server
+### 6. Start backend
 
 ```
 uvicorn app.main:app --reload
@@ -123,7 +131,7 @@ uvicorn app.main:app --reload
 
 ---
 
-### 7. Start Frontend
+### 7. Start frontend
 
 ```
 streamlit run app/ui.py
@@ -140,42 +148,39 @@ streamlit run app/ui.py
 
 ---
 
-## Safety
-
-* Only SELECT queries are allowed
-* Dangerous operations like DELETE, UPDATE, DROP are blocked
-* Fallback queries prevent unintended execution
-
----
-
 ## Screenshots
 
 ### Main Interface
+
 ![Main UI](outputs/main-interface.png)
 
 ---
 
-## Demo Video
-![Demo](outputs/demo.gif)
+## Safety
+
+* Only SELECT queries are allowed
+* Dangerous operations are blocked
+* Invalid queries return safe fallback results
 
 ---
 
 ## Future Improvements
 
-* Better intent detection
+* Context-aware conversations
 * Query optimization
-* Advanced data visualizations
+* Advanced visualizations
 * Deployment support
 * User authentication
 
 ---
 
+## Author
 
 <p align="center">
-  <img src="https://github.com/SudharsaaX.png" width="120" style="border-radius:50%" />
+  <img src="https://github.com/SudharsaaX.png" width="120" />
 </p>
 
-<h3 align="center">Sudharsan</h3>
+<h3 align="center">Sudharsan S</h3>
 
 <p align="center">
   <a href="https://github.com/SudharsaaX">
@@ -184,3 +189,7 @@ streamlit run app/ui.py
 </p>
 
 ---
+
+## License
+
+This project is for educational and demonstration purposes.
