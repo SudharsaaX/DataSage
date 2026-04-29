@@ -152,6 +152,8 @@ streamlit run app/ui.py
 
 ### Main Interface
 ![Main UI](outputs/main-interface.png)
+
+### Demo
 ![Demo](assets/demo.gif)
 
 ---
