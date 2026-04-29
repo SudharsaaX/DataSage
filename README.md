@@ -6,10 +6,6 @@ DataSage is an AI-powered SQL assistant that lets you query a MySQL database usi
 
 ## Demo
 
-[![Watch Demo](outputs/main-interface.png)](https://github.com/SudharsaaX/DataSage)
-
-Or preview below:
-
 ![Demo](outputs/demo.gif)
 
 ---
